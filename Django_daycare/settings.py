@@ -10,25 +10,22 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-nh*5i0&vr+(=!z&+5-)79quzc4v(=id%6rxv&8%8kwn7a!79$&'
+SECRET_KEY = os.getenv('SECRET_KEY' )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']
-
-
-# Application definition
+ALLOWED_HOSTS =  ['127.0.0.1', 'localhost','https://django-daycare.onrender.com']
 
 INSTALLED_APPS = [
     'crispy_forms', 
@@ -78,28 +75,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Django_daycare.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-DATABASES={
-    'default':{
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'projects_db',
-        'USER': 'postgres',  
-        'PASSWORD': 'password', 
-        'HOST': 'localhost',
-        'PORT':'5432',
-    }
-}
-
-
+DATABASES = {"default": dj_database_url.config(default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -137,7 +114,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"  # Added for deployment
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_ROOT = BASE_DIR / "staticfiles" 
 
 # Default primary key field type
