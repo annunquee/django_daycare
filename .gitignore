@@ -13,3 +13,4 @@ venv/
 db.sqlite3
 profile_pics
 staticfiles/*
+.env
