@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ['SECRET_KEY']  # Stored as an environment variable
 DEBUG = os.environ.get('DEBUG') == 'TRUE'
 
-ALLOWED_HOSTS =  ['127.0.0.1', 'localhost','https://django-daycare.onrender.com']
+ALLOWED_HOSTS =  ['127.0.0.1', 'localhost', 'django-daycare.onrender.com']
 
 INSTALLED_APPS = [
     'crispy_forms', 
