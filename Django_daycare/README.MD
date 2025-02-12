@@ -34,3 +34,7 @@ similar data alot easier.
 * Users
 * Staffs 
 * inbox
+
+github live 
+github repo https://github.com/annunquee/django_daycare.git
+render.com https://django-daycare.onrender.com

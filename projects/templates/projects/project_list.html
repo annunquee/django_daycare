@@ -1,17 +1,29 @@
-<h1>Projects</h1>
-{% if user.is_authenticated %}
-    <a href="{% url 'project_create' %}">Create New Project</a>
-{% endif %}
-<ul>
-    {% for project in projects %}
-        <li>
-            {{ project.title }} by {{ project.user.username }}
-            {% if project.user == request.user %}
-                <a href="{% url 'project_edit' project.id %}">Edit</a>
-                <a href="{% url 'project_delete' project.id %}">Delete</a>
-            {% endif %}
-        </li>
-    {% empty %}
-        <li>No projects yet.</li>
-    {% endfor %}
-</ul>
+{% extends 'base.html' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+   
+    
+    <h2 class="mb-4">Projects List</h2>
+    <div class="row">
+        {% for project in projects %}
+            <div class="col-md-4">
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                   
+                        <p class="card-text">{{ project.description|truncatewords:20 }}</p>
+                        <a href="{% url 'project_detail' project.pk %}" class="btn btn-primary">View Details</a>
+
+                    </div>
+                   
+                </div>
+            </div>
+        {% empty %}
+            <p>No projects available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

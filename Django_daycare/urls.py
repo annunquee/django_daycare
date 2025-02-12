@@ -21,13 +21,6 @@ from django.conf.urls.static import static
 from django.http import HttpResponse
 from django.urls import path, include
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('projects/', include('projects.urls')),
-    path('users/', include('users.urls')),
-    path('inbox/', include('inbox.urls')),
-]
-
 
 def home(request):
     return HttpResponse("Welcome to the homepage!")
@@ -35,6 +28,9 @@ def home(request):
 urlpatterns = [
     path('', home, name='home'),
     path('admin/', admin.site.urls),
+    path('projects/', include('projects.urls')),
+    path('users/', include('users.urls')),
+    path('inbox/', include('inbox.urls')),
 ]
 
 
