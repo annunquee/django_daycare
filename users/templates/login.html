@@ -1,7 +1,22 @@
-<h1>Login</h1>
-<form method="POST">
-    {% csrf_token %}
-    <input type="text" name="username" placeholder="Username">
-    <input type="password" name="password" placeholder="Password">
-    <button type="submit">Login</button>
-</form>
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1 class="mb-4">Login</h1>
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            
+            {{ form|crispy }}  <!-- Use crispy forms if enabled -->
+
+            <button type="submit" class="btn btn-primary">Login</button>
+
+            <small class="text-muted ml-2">
+                <a href="{% url 'password_reset' %}">Forgot Password?</a>
+            </small>
+        </form>
+        <small class="text-muted mt-3">
+            Don't have an account? <a href="{% url 'register' %}">Register here</a>.
+        </small>
+    </div>
+{% endblock content %}
