@@ -35,6 +35,7 @@ similar data alot easier.
 * Staffs 
 * inbox
 
-github live 
+link to database 
 github repo https://github.com/annunquee/django_daycare.git
 render.com https://django-daycare.onrender.com
+here: users name and password is (admin) https://django-daycare.onrender.com/admin/

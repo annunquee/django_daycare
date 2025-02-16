@@ -14,3 +14,4 @@ db.sqlite3
 profile_pics
 staticfiles/*
 .env
+README.md
