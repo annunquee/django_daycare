@@ -6,12 +6,7 @@ __pycache__
 .vscode/
 *.pyc
 .env
-.venv
-env/
-venv/
-**/my_environment/
 db.sqlite3
 profile_pics
 staticfiles/*
-.env
 README.md
