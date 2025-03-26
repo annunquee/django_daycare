@@ -29,15 +29,18 @@ urlpatterns = [
     # Homepage
     path('', home, name='home'),
 
-    # Admin URL
+    # Admin Panel
     path('admin/', admin.site.urls),
 
-    # Include other app URLs
+    # Include other apps
     path('projects/', include('projects.urls')),
     path('users/', include('users.urls')),
-    path('inbox/', include('inbox.urls')),
 
-   
+    # Password Reset URLs at the root level
+    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='users/password_reset.html'), name='password_reset'),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='users/password_reset_done.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'), name='password_reset_complete'),
 ]
 
 # Serve static files during development (when DEBUG is True)
