@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect,  get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Project
 from .forms import ProjectForm
+from django.shortcuts import render
 
 def project_list(request):
     projects = Project.objects.all()
@@ -11,6 +12,9 @@ def project_detail(request, pk):
     project = get_object_or_404(Project, pk=pk)
     return render(request, 'projects/project_detail.html', {'project': project})
 
+
+def about_view(request):
+    return render(request, 'about.html')
 
 @login_required
 def project_add(request):
