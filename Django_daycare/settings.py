@@ -78,13 +78,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Django_daycare.wsgi.application'
 
 # Database Configuration
+import dj_database_url
+import os
+
 DATABASES = {
     "default": dj_database_url.config(
         default=os.getenv("DATABASE_URL"),
         conn_max_age=600,
-        ssl_require=True,  # Forces SSL (required by Render)
+        ssl_require=False,  # Try setting this to False if you're having SSL issues
     )
 }
+
 
 
 # Password validation
