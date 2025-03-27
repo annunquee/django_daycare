@@ -85,10 +85,9 @@ DATABASES = {
     "default": dj_database_url.config(
         default=os.getenv("DATABASE_URL"),
         conn_max_age=600,
-        ssl_require=False,  # Try setting this to False if you're having SSL issues
+        sslmode="require"  # Use sslmode instead of ssl_require
     )
 }
-
 
 
 # Password validation
