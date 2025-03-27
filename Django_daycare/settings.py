@@ -10,26 +10,25 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from dotenv import load_dotenv
 import os
-from pathlib import Path
+import environ
 import dj_database_url
+from pathlib import Path
 
-# Load environment variables from the .env file
-load_dotenv()
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+# Initialize environment variables
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # Load .env file
 
-# Debug mode (Set to False in production)
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+# Security & Debugging
+SECRET_KEY = env('SECRET_KEY', default='unsafe-secret-key')
+DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'django-daycare.onrender.com']
 
-# Application definition
+# Installed Apps
 INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
@@ -39,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    
     # My Apps
     'projects',
     'users',
@@ -62,7 +61,7 @@ ROOT_URLCONF = 'Django_daycare.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Ensure this path matches your project structure
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,18 +76,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Django_daycare.wsgi.application'
 
-# Database Configuration
-import dj_database_url
-import os
-
+# Database Configuration (for Render)
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'name',
-        'USER': 'username',
-        'HOST' : 'postgres://{given_username_by_render}:-a.oregon-postgres.render.com/{database_name}',
-        'PASSWORD': env('your-email-app-password'),
-}
+    'default': dj_database_url.config(default=env('DATABASE_URL'))
 }
 
 # Password validation
@@ -108,38 +98,37 @@ USE_TZ = True
 # Custom User Model
 AUTH_USER_MODEL = 'users.CustomUser'
 
-# Static Files (CSS, JavaScript, Images)
+# Static & Media Files
 STATIC_URL = '/static/'
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"  # Use Whitenoise's storage
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-# Media Files (For user uploads)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
 
-# Email Configuration for Password Reset
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Use SMTP for real emails
-EMAIL_HOST = 'smtp.gmail.com'  # Change to your email provider
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-# For local development (to log emails instead of sending)
+# Debugging Emails Locally
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Superuser Credentials from .env
-DJANGO_SUPERUSER_USERNAME = os.getenv('DJANGO_SUPERUSER_USERNAME')
-DJANGO_SUPERUSER_EMAIL = os.getenv('DJANGO_SUPERUSER_EMAIL')
-DJANGO_SUPERUSER_PASSWORD = os.getenv('DJANGO_SUPERUSER_PASSWORD')
+# Superuser Credentials
+DJANGO_SUPERUSER_USERNAME = env('DJANGO_SUPERUSER_USERNAME', default='admin')
+DJANGO_SUPERUSER_EMAIL = env('DJANGO_SUPERUSER_EMAIL', default='admin@example.com')
+DJANGO_SUPERUSER_PASSWORD = env('DJANGO_SUPERUSER_PASSWORD', default='password')
 
-# Cloudinary Configuration for Media Storage
-CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME')
-CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY')
-CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET')
+# Cloudinary Config (if used)
+CLOUDINARY_CLOUD_NAME = env('CLOUDINARY_CLOUD_NAME', default='')
+CLOUDINARY_API_KEY = env('CLOUDINARY_API_KEY', default='')
+CLOUDINARY_API_SECRET = env('CLOUDINARY_API_SECRET', default='')
 
 # Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
@@ -147,7 +136,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Serving static/media files in development
+# Static & Media Files in Dev Mode
 if DEBUG:
     from django.conf.urls.static import static
     urlpatterns = []
