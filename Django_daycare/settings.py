@@ -81,8 +81,9 @@ WSGI_APPLICATION = 'Django_daycare.wsgi.application'
 import dj_database_url
 import os
 
-DATABASES = {"default": dj_database_url.config(default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")}  # Loads connection string from DATABASE_URL
-
+DATABASES = {
+    "default": dj_database_url.config(default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
