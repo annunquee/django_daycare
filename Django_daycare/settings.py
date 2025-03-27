@@ -82,7 +82,13 @@ import dj_database_url
 import os
 
 DATABASES = {
-    "default": dj_database_url.config(default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'name',
+        'USER': 'username',
+        'HOST' : 'postgres://{given_username_by_render}:-a.oregon-postgres.render.com/{database_name}',
+        'PASSWORD': env('your-email-app-password'),
+}
 }
 
 # Password validation
