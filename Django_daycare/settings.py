@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # My Apps
     'projects',
     'users',
@@ -76,10 +76,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Django_daycare.wsgi.application'
 
-# Database Configuration (for Render)
-DATABASES = {
-    'default': dj_database_url.config(default=env('DATABASE_URL'))
-}
+# Database Configuration (Local SQLite or Render PostgreSQL)
+IS_RENDER = "RENDER" in os.environ  # Detect if running on Render
+
+if IS_RENDER:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('DATABASE_NAME'),
+            'USER': env('DATABASE_USER'),
+            'PASSWORD': env('DATABASE_PASSWORD'),
+            'HOST': env('DATABASE_HOST'),
+            'PORT': env('DATABASE_PORT', default='5432'),
+        }
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.config(default=env("DATABASE_URL", default="sqlite:///db.sqlite3"))
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -95,8 +109,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Custom User Model
-AUTH_USER_MODEL = 'users.CustomUser'
+# Custom User Model (Ensure this matches your actual user model)
+AUTH_USER_MODEL = 'users.CustomUser'  # 
 
 # Static & Media Files
 STATIC_URL = '/static/'
@@ -120,7 +134,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Superuser Credentials
+# Superuser Credentials (For Automated Superuser Creation)
 DJANGO_SUPERUSER_USERNAME = env('DJANGO_SUPERUSER_USERNAME', default='admin')
 DJANGO_SUPERUSER_EMAIL = env('DJANGO_SUPERUSER_EMAIL', default='admin@example.com')
 DJANGO_SUPERUSER_PASSWORD = env('DJANGO_SUPERUSER_PASSWORD', default='password')
@@ -135,10 +149,3 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Static & Media Files in Dev Mode
-if DEBUG:
-    from django.conf.urls.static import static
-    urlpatterns = []
-    urlpatterns += static(STATIC_URL, document_root=STATIC_ROOT)
-    urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)
