@@ -35,7 +35,7 @@ similar data alot easier.
 * Staffs 
 * inbox
 
-link to database: postgresqlpostgresql://projects_db_putp_user:7hxuYhca8G7XOKtnCXZQoFFMGXdNEb7p@dpg-cvfantl2ng1s73d450ng-a.frankfurt-postgres.render.com/projects_db_putp
+link to database: 
 github repo https://github.com/annunquee/django_daycare.git
 render.com https://django-daycare.onrender.com
-here: users name and password is (admin) https://django-daycare.onrender.com/admin/
+here: users name (Admin)and password is (admin) https://django-daycare.onrender.com/admin/
