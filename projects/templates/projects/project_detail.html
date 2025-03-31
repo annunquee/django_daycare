@@ -7,9 +7,11 @@
             <p>
                 If you want to collaborate with me, please contact 
                 <strong>{{ project.user.username }}</strong>.
-           
             </p>
-           
+
+            {% if project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid mb-3">
+            {% endif %}
 
             <h2 class="card-title">{{ project.title }}</h2>
             <p><strong>Description:</strong> {{ project.description }}</p>

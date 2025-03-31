@@ -35,7 +35,29 @@ similar data alot easier.
 * Staffs 
 * inbox
 
-link to database: 
+link to database: postgresql://projects_db_putp_user:7hxuYhca8G7XOKtnCXZQoFFMGXdNEb7p@dpg-cvfantl2ng1s73d450ng-a.frankfurt-postgres.render.com/projects_db_putp
+
 github repo https://github.com/annunquee/django_daycare.git
+
+admin user on the local server is (admin) with password (admin)
+
 render.com https://django-daycare.onrender.com
 here: users name (Admin)and password is (admin) https://django-daycare.onrender.com/admin/
+
+you can also enter this in shell, after running python manage.py shell       
+print(CustomUser.objects.filter(is_superuser=True).values('username', 'is_staff', 'is_superuser'))
+to confirm superuser.
+
+# A few explanation on the fixes
+
+my virtual environment was set to gitignore by accident which broke my code and due to that some installed package on requirement.txt were lost. but not correctly installed as i kept running pip freeze >requirements.txt each time after every pip install, which autamatically saved it properly this time.
+
+i used a defferent aproach this time from the method thought in class for deploying to render. At this stage everything seems perfectly okay after going through your remarks and every single point made was very much considered. 
+
+tasting impplimented much better than before, this time with code in test.py for users, projects and inbox. 
+
+can't chage project name at this point, as this will affect settings.py, wsgi.py and initial render deployment.
+
+more details on logging into render admin is availible on render environment.
+
+i initially left my commented out code to give you an insight on a solution i tried but didn't work before sticking to what i have working.

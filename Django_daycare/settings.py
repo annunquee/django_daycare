@@ -67,6 +67,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.media',  # Added for MEDIA_URL support
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -81,18 +82,11 @@ IS_RENDER = "RENDER" in os.environ  # Detect if running on Render
 
 if IS_RENDER:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env('DATABASE_NAME'),
-            'USER': env('DATABASE_USER'),
-            'PASSWORD': env('DATABASE_PASSWORD'),
-            'HOST': env('DATABASE_HOST'),
-            'PORT': env('DATABASE_PORT', default='5432'),
-        }
+        'default': dj_database_url.config(default=env("DATABASE_URL"))
     }
 else:
     DATABASES = {
-        'default': dj_database_url.config(default=env("DATABASE_URL", default="sqlite:///db.sqlite3"))
+        'default': dj_database_url.config(default="sqlite:///db.sqlite3")
     }
 
 # Password validation
@@ -109,8 +103,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Custom User Model (Ensure this matches your actual user model)
-AUTH_USER_MODEL = 'users.CustomUser'  # 
+AUTH_USER_MODEL = 'users.CustomUser'  # Ensure this matches your actual model
+
 
 # Static & Media Files
 STATIC_URL = '/static/'
@@ -119,7 +113,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -149,3 +143,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
