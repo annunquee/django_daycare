@@ -32,7 +32,6 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'django-daycare.onrender.com']
 INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
-    'cloudinary', 'cloudinary_storage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -136,17 +135,12 @@ DJANGO_SUPERUSER_USERNAME = env('DJANGO_SUPERUSER_USERNAME', default='admin')
 DJANGO_SUPERUSER_EMAIL = env('DJANGO_SUPERUSER_EMAIL', default='admin@example.com')
 DJANGO_SUPERUSER_PASSWORD = env('DJANGO_SUPERUSER_PASSWORD', default='password')
 
-# Cloudinary Config (if used)
-CLOUDINARY_CLOUD_NAME = env('CLOUDINARY_CLOUD_NAME', default='')
-CLOUDINARY_API_KEY = env('CLOUDINARY_API_KEY', default='')
-CLOUDINARY_API_SECRET = env('CLOUDINARY_API_SECRET', default='')
+
 
 # Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'  # Media files
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # Static files
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
