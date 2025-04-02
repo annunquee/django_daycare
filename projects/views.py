@@ -20,9 +20,6 @@ def project_detail(request, pk):
     project = get_object_or_404(Project, pk=pk)
     return render(request, "projects/project_detail.html", {"project": project})
 
-# About Page View
-def about_view(request):
-    return render(request, "projects/about.html")  # Ensure this template exists
 
 # View for Adding a New Project (Login Required)
 @login_required

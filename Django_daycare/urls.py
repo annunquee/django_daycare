@@ -20,7 +20,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse
 from django.contrib.auth import views as auth_views
-from projects.views import about_view  # Import from projects app
 
 # Simple view for homepage
 def home(request):
@@ -28,7 +27,6 @@ def home(request):
 
 urlpatterns = [
     path('', home, name='home'),  # Homepage
-    path('about/', about_view, name='about'),  # About page
     path('admin/', admin.site.urls),
     path('projects/', include('projects.urls')),
     path('users/', include('users.urls')),
