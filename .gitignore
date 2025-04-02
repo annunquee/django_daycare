@@ -7,6 +7,4 @@ __pycache__
 *.pyc
 .env
 db.sqlite3
-profile_pics
-staticfiles/*
 README.md
