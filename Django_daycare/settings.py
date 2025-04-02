@@ -107,12 +107,13 @@ USE_TZ = True
 AUTH_USER_MODEL = 'users.CustomUser'  # Ensure this matches your actual model
 
 
-# Static & Media Files
+# Static Files
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
+# Media Files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -145,4 +146,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'  # Media files
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # Static files
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
