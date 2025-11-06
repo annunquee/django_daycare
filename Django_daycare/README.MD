@@ -61,3 +61,5 @@ can't chage project name at this point, as this will affect settings.py, wsgi.py
 more details on logging into render admin is availible on render environment.
 
 i initially left my commented out code to give you an insight on a solution i tried but didn't work before sticking to what i have working.
+
+render isn't uploading my media so images aren't displaying there, but are displaying perfectly on the local host. due to unlimited time on my hands i couldn't have the media on render respond more than i could.
